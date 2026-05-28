@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SynthDeck - Interactive Subtractive Synthesis Courseware</title>
+  <meta name="description" content="An interactive split-screen educational console teaching subtractive synthesis concepts. Features modular oscillators, filters, ADSR envelopes, LFOs, and custom audio patch bays. Built for Sound Production students.">
+  
+  <!-- Preconnect and Load Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Share+Tech+Mono&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Custom Stylesheets -->
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+  <!-- Audio Context Activator Overlay -->
+  <div id="audio-activator-overlay" class="activator-overlay">
+    <div class="activator-card">
+      <h1 class="activator-title">SynthDeck</h1>
+      <p class="activator-subtitle">SCQF Level 7 Sound Production Courseware</p>
+      <div class="activator-decor">
+        <span class="decor-wave"></span>
+        <span class="decor-wave"></span>
+        <span class="decor-wave"></span>
+      </div>
+      <button id="btn-activate-audio" class="btn-activate">POWER ON CONSOLE</button>
+      <p class="activator-notice">Requires audio permissions. Wear headphones for the best experience.</p>
+    </div>
+  </div>
+
+  <main class="app-container">
+    <!-- Left Panel: Curriculum Notebook Binder -->
+    <section class="notebook-panel" aria-label="Curriculum Binder">
+      <!-- Spiral spine animation wire loops -->
+      <div class="spiral-spine" id="spiral-spine">
+        <!-- Generated rings will be inserted here -->
+      </div>
+      
+      <!-- Notebook Cream Lined Paper -->
+      <div class="notebook-paper">
+        <div class="paper-margin-line"></div>
+        <div class="notebook-content">
+          
+          <!-- Slide 1 Content -->
+          <article class="slide-curriculum active" id="slide-left-1" aria-hidden="false">
+            <header>
+              <h1 class="slide-title">1. Introduction to Sound Synthesis</h1>
+            </header>
+            <p>Welcome to <strong>SynthDeck</strong>! Sound synthesis is the art and science of creating audio signals from scratch using electronic circuits or digital algorithms.</p>
+            <p>In sound production, we categorize synthesis into four main methods, each producing unique timbral characteristics:</p>
+            <ul>
+              <li><strong>Subtractive Synthesis:</strong> Starts with geometrically rich waveforms containing many harmonics, then uses filters to cut away unwanted frequencies (subtracted energy).</li>
+              <li><strong>Frequency Modulation (FM):</strong> Modulates the frequency of one sound wave (carrier) using another high-frequency wave (modulator), generating complex metallic or bell-like textures.</li>
+              <li><strong>Physical Modeling:</strong> Uses mathematical simulations of acoustic physical properties (like strings, pipes, or wooden blocks) to replicate real-world instruments.</li>
+              <li><strong>Wavetable Synthesis:</strong> Scans through a pre-recorded table of digital cycles, morphing smoothly between different waveshapes over time.</li>
+            </ul>
+            <p>Use the selector on the right to hear how these methods differ!</p>
+          </article>
+
+          <!-- Slide 2 Content -->
+          <article class="slide-curriculum" id="slide-left-2" aria-hidden="true">
+            <header>
+              <h1 class="slide-title">2. Anatomy of a Synthesizer</h1>
+            </header>
+            <p>Most commercial subtractive synthesizers share a standardized signal routing path. To understand sound design, we must follow this structural flow:</p>
+            <ul>
+              <li><strong>VCO (Oscillator):</strong> The primary generator. It produces the raw periodic electrical sound waves (sawtooth, square, triangle) at a specific pitch.</li>
+              <li><strong>VCF (Filter):</strong> The tone-sculptor. It shapes the overall tone by cutting out or emphasizing frequency bands (e.g. low-pass filtering).</li>
+              <li><strong>VCA (Amplifier):</strong> The volume gate. It controls how the loudness changes over time (e.g. key press to fade out).</li>
+              <li><strong>Modulators (LFO / Envelopes):</strong> Auxiliary control sources that modulate parameters of the VCO, VCF, or VCA, adding movement and expression.</li>
+            </ul>
+            <p>Hover or click on the modules in the block diagram to isolate their sonic functions in real-time!</p>
+          </article>
+
+          <!-- Slide 3 Content -->
+          <article class="slide-curriculum" id="slide-left-3" aria-hidden="true">
+            <header>
+              <h1 class="slide-title">3. The Oscillator (VCO)</h1>
+            </header>
+            <p>The <strong>Voltage Controlled Oscillator (VCO)</strong> is the starting point of sound. It produces a repeating electrical wave shape. The speed of this repetition is called <strong>frequency</strong>, which we measure in Hertz (Hz) or cycles per second.</p>
+            <p>Our ears perceive frequency as <strong>pitch</strong>:</p>
+            <ul>
+              <li><strong>Higher Frequency:</strong> Faster repeating cycles, resulting in a higher musical pitch.</li>
+              <li><strong>Lower Frequency:</strong> Slower repeating cycles, resulting in a deeper musical pitch.</li>
+            </ul>
+            <p>Press the keys on the keybed or use your keyboard (keys A through K) to trigger a pure sine wave. <strong>Use Z to shift one octave down and X to shift one octave up.</strong> Observe the visual cycles on the oscilloscope canvas!</p>
+          </article>
+
+          <!-- Slide 4 Content -->
+          <article class="slide-curriculum" id="slide-left-4" aria-hidden="true">
+            <header>
+              <h1 class="slide-title">4. Additive Synthesis</h1>
+            </header>
+            <p>A pure sine wave is the only sound wave that contains a single, isolated frequency. All other complex waveforms are composed of a combination of sine waves added together.</p>
+            <p>This is the foundation of **Additive Synthesis**:</p>
+            <ul>
+              <li><strong>Fundamental Pitch:</strong> The lowest frequency present in a sound, which determines the overall musical note we hear.</li>
+              <li><strong>Harmonics:</strong> Higher frequencies that are whole-number multiples of the fundamental pitch (e.g., 2x, 3x, 4x). These shape the unique tone color (timbre).</li>
+            </ul>
+            <p>Adjust the harmonic sliders on the right. Mix in the harmonics to build a complex tone. <strong>Press keys A-K to play, and use Z/X to shift octaves.</strong> Try the Flute, Clarinet, and Organ presets to see their spectrums!</p>
+          </article>
+
+          <!-- Slide 5 Content -->
+          <article class="slide-curriculum" id="slide-left-5" aria-hidden="true">
+            <header>
+              <h1 class="slide-title">5. Waveforms & The Pulse Wave</h1>
+            </header>
+            <p>Subtractive synthesis relies on geometric waveforms that contain rich sets of harmonics. The primary shapes are:</p>
+            <ul>
+              <li><strong>Sawtooth:</strong> Bright and buzzy, containing all integer harmonics (both odd and even). Ideal for strings and brass.</li>
+              <li><strong>Triangle:</strong> Warm and flute-like, containing only odd harmonics that roll off very rapidly.</li>
+              <li><strong>Pulse (or Square) Wave:</strong> Hollow and woody. Its harmonic makeup depends on its <strong>Pulse Width</strong>—the percentage of time the wave stays at its peak compared to its trough.</li>
+            </ul>
+            <p>Adjust the Pulse Width slider on the right between 10% and 50%. <strong>Play notes using A-K and shift octaves with Z/X.</strong> Watch the duty cycle narrow on the oscilloscope, hearing it shift from a hollow square wave to a nasal pulse buzz.</p>
+          </article>
+
+          <!-- Slide 6 Content -->
+          <article class="slide-curriculum" id="slide-left-6" aria-hidden="true">
+            <header>
+              <h1 class="slide-title">6. Unpitched Noise Generation</h1>
+            </header>
+            <p>Not all sounds are periodic. Periodic sounds have repeating waveforms that create a clear musical pitch. Non-periodic sounds are random, resulting in <strong>noise</strong>.</p>
+            <p>In sound production, noise is essential for synthesizing drums, wind, rain, and sound effects. We classify noise by its frequency content:</p>
+            <ul>
+              <li><strong>White Noise:</strong> Contains equal energy across all individual frequencies. It sounds bright, harsh, and hiss-like (analogous to white light containing all colors).</li>
+              <li><strong>Pink Noise:</strong> Contains equal energy per octave. Because our hearing logarithmic, pink noise sounds balanced, natural, and deep—similar to ocean waves or rushing wind.</li>
+            </ul>
+            <p>Use the crossfader slider to morph between White and Pink noise and study the FFT spectrum curves!</p>
+          </article>
+
+          <!-- Slide 7 Content -->
+          <article class="slide-curriculum" id="slide-left-7" aria-hidden="true">
+            <header>
+              <h1 class="slide-title">7. Introduction to Modulation</h1>
+            </header>
+            <p>A static synthesizer sound is boring and flat. To breathe life and movement into a sound, we use <strong>modulation</strong>—automatically changing a parameter over time.</p>
+            <p>Every modulation setup requires three main concepts:</p>
+            <ul>
+              <li><strong>Modulation Source:</strong> The generator of the control signal (e.g. an LFO or an Envelope).</li>
+              <li><strong>Modulation Destination:</strong> The target parameter being controlled (e.g. Oscillator Pitch, Filter Cutoff, or VCA Volume).</li>
+              <li><strong>Modulation Depth:</strong> The strength or range of the modulation.</li>
+            </ul>
+            <p>Drag a patch cable on the right from a Source port (LFO/Envelope) to a Destination input port (Pitch/Filter/Volume) to see how the modulation sweeps the target dials!</p>
+          </article>
+
+          <!-- Slide 8 Content -->
+          <article class="slide-curriculum" id="slide-left-8" aria-hidden="true">
+            <header>
+              <h1 class="slide-title">8. Envelope Generators (ADSR)</h1>
+            </header>
+            <p>An <strong>Envelope Generator</strong> is a modulator that produces a single control curve triggered every time a key is pressed. The standard envelope is divided into four stages (ADSR):</p>
+            <ul>
+              <li><strong>Attack (A):</strong> The time it takes for the signal to rise from zero to its maximum level.</li>
+              <li><strong>Decay (D):</strong> The time it takes to fall from the peak level to the sustain level.</li>
+              <li><strong>Sustain (S):</strong> The steady volume level maintained as long as the key is held down.</li>
+              <li><strong>Release (R):</strong> The time it takes for the sound to fade to zero after the key is released.</li>
+            </ul>
+            <p><strong>Visualizing Envelope Stages:</strong> Drag the visual envelope nodes (Attack, Decay, Sustain, and Release) on the right to shape your sound envelope. <strong>Play notes using keys A-K and shift octaves with Z/X.</strong> Watch the orange tracker ball follow the envelope path in real-time: it rises through the Attack stage, descends through Decay, sits at Sustain as long as you hold the key, and slides down the Release path once you release the key!</p>
+          </article>
+
+          <!-- Slide 9 Content -->
+          <article class="slide-curriculum" id="slide-left-9" aria-hidden="true">
+            <header>
+              <h1 class="slide-title">9. Filter Types & Slopes</h1>
+            </header>
+            <p>A <strong>Voltage Controlled Filter (VCF)</strong> is used to subtract frequency bands from a sound, sculpting its timbre. The point where the filter starts cutting frequencies is called the <strong>Cutoff Frequency</strong>.</p>
+            <p>Filters behave differently depending on their type:</p>
+            <ul>
+              <li><strong>Low-Pass (LPF):</strong> Cuts high frequencies and lets low frequencies pass. Perfect for making warm, mellow, or bass-heavy tones.</li>
+              <li><strong>High-Pass (HPF):</strong> Cuts low frequencies and lets high frequencies pass. Ideal for bright, thin, or airy textures.</li>
+              <li><strong>Band-Pass (BPF):</strong> Cuts both highs and lows, passing only a narrow frequency band.</li>
+            </ul>
+            <p>The steepness of the low-pass filter's cutoff is measured in <strong>poles</strong> (stages). Each pole adds -6 dB/octave of slope:</p>
+            <ul>
+              <li><strong>1-Pole:</strong> Gentle roll-off (-6 dB/octave).</li>
+              <li><strong>2-Pole:</strong> Moderate roll-off (-12 dB/octave).</li>
+              <li><strong>4-Pole:</strong> Steep, classic analog roll-off (-24 dB/octave).</li>
+            </ul>
+            <p>Play notes (keys A-K) and sweep the Cutoff slider on the right to audition the filter types and low-pass slopes without any resonance!</p>
+          </article>
+
+          <!-- Slide 10 Content -->
+          <article class="slide-curriculum" id="slide-left-10" aria-hidden="true">
+            <header>
+              <h1 class="slide-title">10. Filter Resonance (Q)</h1>
+            </header>
+            <p><strong>Resonance</strong> (also known as Q, or quality factor) is created by feeding a portion of the filter's output back into its input.</p>
+            <p>This feedback loop creates a sharp volume boost (or peak) right at the <strong>Cutoff Frequency</strong>. As you sweep the cutoff frequency, this resonant peak emphasizes the harmonics crossing it, producing a characteristic nasal <strong>"honk"</strong>, whistle, or wah-wah sweep.</p>
+            <p>If resonance is turned up high enough, the filter will self-oscillate, generating its own clean tone even with no incoming oscillator sound!</p>
+            <p>Use the 2D XY Pad on the right to sweep the filter in real-time. The <strong>X-axis</strong> controls the Cutoff frequency, while the <strong>Y-axis</strong> controls the Resonance level.</p>
+          </article>
+
+          <!-- Slide 11 Content -->
+          <article class="slide-curriculum" id="slide-left-11" aria-hidden="true">
+            <header>
+              <h1 class="slide-title">11. Low Frequency Oscillators (LFO)</h1>
+            </header>
+            <p>An <strong>LFO</strong> is an oscillator that operates below the threshold of human hearing (usually under 20 Hz). Because we can't hear it directly, we use it to modulate other components:</p>
+            <ul>
+              <li><strong>Pitch Modulation (Vibrato):</strong> Creates a subtle, warm pitch warble.</li>
+              <li><strong>Volume Modulation (Tremolo):</strong> Pulsates the volume output.</li>
+              <li><strong>Filter Modulation (Wah/Growl):</strong> Creates sweeping filter sweeps, central to dubstep basslines and ambient pads.</li>
+            </ul>
+            <p>Adjust the LFO Rate, Depth, and Destination parameters on the right. <strong>Play notes using keys A-K (shift octaves with Z/X)</strong> to hear the LFO modulate pitch (vibrato), filter cutoff (wah-wah), or volume (tremolo) in real-time!</p>
+          </article>
+
+          <!-- Slide 12 Content -->
+          <article class="slide-curriculum" id="slide-left-12" aria-hidden="true">
+            <header>
+              <h1 class="slide-title">12. Master Playground Mixer</h1>
+            </header>
+            <p>Welcome to the <strong>Master Playground</strong>! You now have full access to all parameters in a consolidated sandboxed instrument console.</p>
+            <p>Here are some patch ideas to get you started:</p>
+            <ul>
+              <li><strong>Classic Brass:</strong> Set Oscillator to Sawtooth. Set Filter Cutoff to low. Set ADSR Envelope to slow attack, medium decay, high sustain. Link ADSR to filter cutoff.</li>
+              <li><strong>Nasal Pulse Bass:</strong> Set Oscillator to Pulse wave, pulse width to 15%. Set Filter resonance to high, and cutoff low.</li>
+              <li><strong>Helicopter Noise:</strong> Set Noise blend to full. Modulate VCA volume with a square wave LFO running at 6 Hz.</li>
+            </ul>
+            <p>Mix oscillators, noise, filters, LFO, and ADSR. <strong>Play notes using keys A-K (shift octaves with Z/X)</strong>, and watch the oscilloscope and FFT outputs in real-time!</p>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Right Panel: Dynamic Dashboard Workspace -->
+    <section class="dashboard-panel" aria-label="Synthesizer Dashboard">
+      <div class="dashboard-container">
+        
+        <!-- Workspace Slides viewport -->
+        <div class="workspace-viewport" id="workspace-viewport">
+          
+          <!-- Slide 1 Workspace: Method Selector -->
+          <div class="workspace-page active" id="slide-right-1">
+            <div class="glass-card">
+              <h2 class="widget-title">Synthesis Engine Selector</h2>
+              <div class="method-selector-grid">
+                <button class="btn-method" id="btn-meth-sub" data-method="subtractive">
+                  <span class="btn-glow"></span>
+                  <span class="btn-text">SUBTRACTIVE</span>
+                </button>
+                <button class="btn-method" id="btn-meth-fm" data-method="fm">
+                  <span class="btn-glow"></span>
+                  <span class="btn-text">FREQUENCY MOD (FM)</span>
+                </button>
+                <button class="btn-method" id="btn-meth-phys" data-method="physical">
+                  <span class="btn-glow"></span>
+                  <span class="btn-text">PHYSICAL MODELING</span>
+                </button>
+                <button class="btn-method" id="btn-meth-wave" data-method="wavetable">
+                  <span class="btn-glow"></span>
+                  <span class="btn-text">WAVETABLE</span>
+                </button>
+              </div>
+              <div class="canvas-wrapper">
+                <canvas id="canvas-s1-geom" class="visualizer-canvas"></canvas>
+              </div>
+              <p class="method-indicator">Select a synthesis type above to trigger a sonic example and morph the abstract geometric field.</p>
+            </div>
+          </div>
+
+          <!-- Slide 2 Workspace: Interactive Block Diagram -->
+          <div class="workspace-page" id="slide-right-2">
+            <div class="glass-card">
+              <h2 class="widget-title">Subtractive Signal Flow Diagram</h2>
+              
+              <div class="block-diagram-container">
+                <!-- SVG modulation routing arrows -->
+                <svg class="diagram-routing-svg" viewBox="0 0 440 212" style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 440px; height: 212px; pointer-events: none; z-index: 1;">
+                  <defs>
+                    <marker id="arrow-head-default" markerWidth="6" markerHeight="6" refX="2" refY="3" orient="auto">
+                      <path d="M0,0 L0,6 L6,3 z" fill="#a0aec0" />
+                    </marker>
+                    <marker id="arrow-head-cyan" markerWidth="6" markerHeight="6" refX="2" refY="3" orient="auto">
+                      <path d="M0,0 L0,6 L6,3 z" fill="#66fcf1" />
+                    </marker>
+                    <marker id="arrow-head-purple" markerWidth="6" markerHeight="6" refX="2" refY="3" orient="auto">
+                      <path d="M0,0 L0,6 L6,3 z" fill="#d946ef" />
+                    </marker>
+                  </defs>
+                  <!-- LFO -> VCO (Pitch Mod) vertical line -->
+                  <path d="M60,122 L60,96" class="route-line mod-arrow arrow-lfo-vco" stroke="#a0aec0" stroke-width="2" stroke-dasharray="4" fill="none" marker-end="url(#arrow-head-default)" />
+                  <!-- Envelope -> VCF (Filter Mod) vertical line -->
+                  <path d="M220,122 L220,96" class="route-line env-route mod-arrow arrow-env-vcf" stroke="#a0aec0" stroke-width="2" stroke-dasharray="4" fill="none" marker-end="url(#arrow-head-default)" />
+                  <!-- Envelope -> VCA (Volume Gate) diagonal line -->
+                  <path d="M250,122 L350,96" class="route-line env-route mod-arrow arrow-env-vca" stroke="#a0aec0" stroke-width="2" stroke-dasharray="4" fill="none" marker-end="url(#arrow-head-default)" />
+                </svg>
+
+                <div class="diagram-block" id="block-vco" data-module="vco">
+                  <span class="block-label">VCO</span>
+                  <span class="block-desc">Oscillator</span>
+                  <div class="mini-wave-preview sine"></div>
+                </div>
+                
+                <div class="signal-arrow" id="arrow-vco-vcf">➔</div>
+                
+                <div class="diagram-block" id="block-vcf" data-module="vcf">
+                  <span class="block-label">VCF</span>
+                  <span class="block-desc">Lowpass Filter</span>
+                  <div class="mini-filter-preview"></div>
+                </div>
+                
+                <div class="signal-arrow" id="arrow-vcf-vca">➔</div>
+                
+                <div class="diagram-block" id="block-vca" data-module="vca">
+                  <span class="block-label">VCA</span>
+                  <span class="block-desc">Amplifier / Gate</span>
+                  <div class="mini-envelope-preview"></div>
+                </div>
+
+                <div class="diagram-block modulator" id="block-lfo" data-module="lfo">
+                  <span class="block-label">LFO</span>
+                  <span class="block-desc">Low Freq Osc</span>
+                </div>
+
+                <div class="diagram-block modulator" id="block-env" data-module="env">
+                  <span class="block-label">Envelope</span>
+                  <span class="block-desc">ADSR Generator</span>
+                </div>
+
+                <!-- Keep text legend at bottom -->
+                <div class="mod-routing-lines">
+                  <div class="mod-arrow arrow-lfo-vco" id="arrow-lfo-vco-text">▲ LFO ➔ VCO (Pitch Mod)</div>
+                  <div class="mod-arrow arrow-env-vcf" id="arrow-env-vcf-text">▲ Envelope ➔ VCF (Filter Mod)</div>
+                  <div class="mod-arrow arrow-env-vca" id="arrow-env-vca-text">▲ Envelope ➔ VCA (Volume Gate)</div>
+                </div>
+              </div>
+
+              <div id="diagram-inspector" class="diagram-inspector">
+                <p class="inspector-prompt">Hover over or click any signal block to inspect its role and hear its sonic effect.</p>
+                <div class="inspector-content hidden">
+                  <h3 id="inspector-title" class="inspector-title">VCO</h3>
+                  <p id="inspector-body" class="inspector-body">The Voltage Controlled Oscillator...</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 3 Workspace: VCO Pitch / Oscilloscope -->
+          <div class="workspace-page" id="slide-right-3">
+            <div class="glass-card">
+              <h2 class="widget-title">Oscilloscope Time-Domain Monitor</h2>
+              <div class="canvas-wrapper">
+                <canvas id="canvas-s3-scope" class="visualizer-canvas"></canvas>
+              </div>
+              <p class="display-note">Sine wave: A pure tone containing only the fundamental frequency. Pitch is proportional to wave density.</p>
+              
+              <!-- Keybed goes here in JS initialization, shared container structure -->
+              <div class="keybed-container" id="keybed-s3"></div>
+            </div>
+          </div>
+
+          <!-- Slide 4 Workspace: Additive Synthesis sliders -->
+          <div class="workspace-page" id="slide-right-4">
+            <div class="glass-card">
+              <h2 class="widget-title">Harmonics Mixing Desk (FFT Analyzer)</h2>
+              <div class="canvas-wrapper">
+                <canvas id="canvas-s4-fft" class="visualizer-canvas"></canvas>
+              </div>
+              
+              <div class="control-row">
+                <div class="preset-selector">
+                  <span class="control-label">INSTRUMENT PRESETS</span>
+                  <div class="button-group">
+                    <button class="btn-preset active" id="btn-add-custom" data-preset="custom">Custom</button>
+                    <button class="btn-preset" id="btn-add-flute" data-preset="flute">Flute</button>
+                    <button class="btn-preset" id="btn-add-clarinet" data-preset="clarinet">Clarinet</button>
+                    <button class="btn-preset" id="btn-add-organ" data-preset="organ">Organ</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="harmonic-sliders-container">
+                <div class="slider-vertical-wrapper">
+                  <span class="slider-val" id="lbl-harm-1">1.00</span>
+                  <input type="range" class="slider-vertical" id="slider-harm-1" min="0" max="1" step="0.01" value="1.0" orient="vertical">
+                  <span class="slider-lbl">1st (Fund)</span>
+                </div>
+                <div class="slider-vertical-wrapper">
+                  <span class="slider-val" id="lbl-harm-2">0.00</span>
+                  <input type="range" class="slider-vertical" id="slider-harm-2" min="0" max="1" step="0.01" value="0.0" orient="vertical">
+                  <span class="slider-lbl">2nd Harm</span>
+                </div>
+                <div class="slider-vertical-wrapper">
+                  <span class="slider-val" id="lbl-harm-3">0.00</span>
+                  <input type="range" class="slider-vertical" id="slider-harm-3" min="0" max="1" step="0.01" value="0.0" orient="vertical">
+                  <span class="slider-lbl">3rd Harm</span>
+                </div>
+                <div class="slider-vertical-wrapper">
+                  <span class="slider-val" id="lbl-harm-4">0.00</span>
+                  <input type="range" class="slider-vertical" id="slider-harm-4" min="0" max="1" step="0.01" value="0.0" orient="vertical">
+                  <span class="slider-lbl">4th Harm</span>
+                </div>
+                <div class="slider-vertical-wrapper">
+                  <span class="slider-val" id="lbl-harm-5">0.00</span>
+                  <input type="range" class="slider-vertical" id="slider-harm-5" min="0" max="1" step="0.01" value="0.0" orient="vertical">
+                  <span class="slider-lbl">5th Harm</span>
+                </div>
+                <div class="slider-vertical-wrapper">
+                  <span class="slider-val" id="lbl-harm-6">0.00</span>
+                  <input type="range" class="slider-vertical" id="slider-harm-6" min="0" max="1" step="0.01" value="0.0" orient="vertical">
+                  <span class="slider-lbl">6th Harm</span>
+                </div>
+                <div class="slider-vertical-wrapper">
+                  <span class="slider-val" id="lbl-harm-7">0.00</span>
+                  <input type="range" class="slider-vertical" id="slider-harm-7" min="0" max="1" step="0.01" value="0.0" orient="vertical">
+                  <span class="slider-lbl">7th Harm</span>
+                </div>
+                <div class="slider-vertical-wrapper">
+                  <span class="slider-val" id="lbl-harm-8">0.00</span>
+                  <input type="range" class="slider-vertical" id="slider-harm-8" min="0" max="1" step="0.01" value="0.0" orient="vertical">
+                  <span class="slider-lbl">8th Harm</span>
+                </div>
+              </div>
+
+              <div class="keybed-container" id="keybed-s4"></div>
+            </div>
+          </div>
+
+          <!-- Slide 5 Workspace: Waveforms & Pulse Width -->
+          <div class="workspace-page" id="slide-right-5">
+            <div class="glass-card">
+              <h2 class="widget-title">Waveform Shapes & Pulse Width</h2>
+              <div class="canvas-grid-s5">
+                <div class="canvas-wrapper">
+                  <canvas id="canvas-s5-scope" class="visualizer-canvas"></canvas>
+                  <div style="position: absolute; top: 4px; left: 6px; font-size: 0.7rem; color: var(--text-muted); font-family: var(--font-dashboard); pointer-events: none; text-transform: uppercase;">Oscilloscope (Time Domain)</div>
+                </div>
+                <div class="canvas-wrapper">
+                  <canvas id="canvas-s5-fft" class="visualizer-canvas"></canvas>
+                  <div style="position: absolute; top: 4px; left: 6px; font-size: 0.7rem; color: var(--text-muted); font-family: var(--font-dashboard); pointer-events: none; text-transform: uppercase;">Spectrum Analyzer (FFT)</div>
+                </div>
+              </div>
+
+              <div class="wave-controls-grid">
+                <div class="control-box">
+                  <span class="control-label">SELECT WAVEFORM</span>
+                  <div class="waveform-btn-group">
+                    <button class="btn-wave-select" id="btn-w-sine" data-wave="sine">Sine</button>
+                    <button class="btn-wave-select" id="btn-w-tri" data-wave="triangle">Triangle</button>
+                    <button class="btn-wave-select" id="btn-w-saw" data-wave="sawtooth">Sawtooth</button>
+                    <button class="btn-wave-select active" id="btn-w-pulse" data-wave="pulse">Pulse / Square</button>
+                  </div>
+                </div>
+
+                <div class="control-box" id="pw-slider-box">
+                  <span class="control-label">PULSE WIDTH (DUTY CYCLE)</span>
+                  <div class="slider-horizontal-container">
+                    <input type="range" class="slider-horizontal" id="slider-s5-pw" min="0.10" max="0.50" step="0.001" value="0.50">
+                    <span class="slider-readout" id="lbl-s5-pw">50% (Square)</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="keybed-container" id="keybed-s5"></div>
+            </div>
+          </div>
+
+          <!-- Slide 6 Workspace: Noise Crossfader -->
+          <div class="workspace-page" id="slide-right-6">
+            <div class="glass-card">
+              <h2 class="widget-title">Noise Color Spectrum Analyzer</h2>
+              <div class="canvas-wrapper">
+                <canvas id="canvas-s6-fft" class="visualizer-canvas"></canvas>
+              </div>
+
+              <div class="noise-controls">
+                <div class="crossfader-container">
+                  <span class="crossfade-lbl font-mono text-cyan">WHITE NOISE</span>
+                  <input type="range" class="slider-horizontal crossfader" id="slider-noise-fade" min="0" max="1" step="0.01" value="0.5">
+                  <span class="crossfade-lbl font-mono text-purple">PINK NOISE</span>
+                </div>
+                
+                <div class="control-row center margin-top" style="display: flex; gap: 12px;">
+                  <button class="btn-action" id="btn-noise-toggle">PLAY NOISE</button>
+                  <button class="btn-action" id="btn-noise-envelope">PLAY ENVELOPE (HI-HAT)</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 7 Workspace: Drag and Drop Patch Bay -->
+          <div class="workspace-page" id="slide-right-7">
+            <div class="glass-card">
+              <h2 class="widget-title">Virtual Patch Routing Bay</h2>
+              
+              <div class="patch-bay-container" id="patch-bay-container">
+                <!-- SVG Canvas for drawing cables -->
+                <svg class="patch-cables-svg" id="patch-cables-svg"></svg>
+                
+                <!-- Patch Bay Ports Board -->
+                <div class="patch-board">
+                  <!-- Sources (Outputs) -->
+                  <div class="patch-section sources">
+                    <h3>SOURCES (OUT)</h3>
+                    
+                    <div class="patch-port-group">
+                      <div class="patch-jack-out" id="jack-out-lfo" data-source="lfo" draggable="false">
+                        <span class="jack-socket"></span>
+                      </div>
+                      <div class="source-illustration-container">
+                        <span class="jack-label">LFO (Sine)</span>
+                        <svg class="mini-source-svg" viewBox="0 0 100 40" id="svg-lfo-mod">
+                          <path id="path-lfo-mod" d="M 2 20 M 2 20 Q 24 4 48 20 T 98 20" fill="none" stroke="var(--canvas-trace)" stroke-width="2.5"/>
+                        </svg>
+                      </div>
+                    </div>
+
+                    <div class="patch-port-group">
+                      <div class="patch-jack-out" id="jack-out-env" data-source="env" draggable="false">
+                        <span class="jack-socket"></span>
+                      </div>
+                      <div class="source-illustration-container">
+                        <span class="jack-label">ENV (ADSR)</span>
+                        <svg class="mini-source-svg" viewBox="0 0 100 40" id="svg-env-mod">
+                          <path id="path-env-mod" d="M 2 38 L 20 4 L 40 18 L 70 18 L 98 38" fill="none" stroke="var(--canvas-trace-2)" stroke-width="2.5"/>
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Divider wire bar -->
+                  <div class="patch-divider"></div>
+
+                  <!-- Destinations (Inputs) -->
+                  <div class="patch-section destinations">
+                    <h3>DESTINATIONS (IN)</h3>
+
+                    <div class="patch-port-group destination-item">
+                      <div class="patch-jack-in" id="jack-in-pitch" data-destination="pitch">
+                        <span class="jack-socket"></span>
+                      </div>
+                      <div class="dest-control-container">
+                        <span class="jack-label">PITCH</span>
+                        <div class="knob-control-wrapper">
+                          <div class="dial-container">
+                            <div class="dial-body" id="dial-dest-pitch">
+                              <div class="dial-indicator"></div>
+                            </div>
+                          </div>
+                          <span class="dial-readout" id="lbl-dest-pitch">C4</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="patch-port-group destination-item">
+                      <div class="patch-jack-in" id="jack-in-filter" data-destination="filter">
+                        <span class="jack-socket"></span>
+                      </div>
+                      <div class="dest-control-container">
+                        <span class="jack-label">FILTER CUTOFF</span>
+                        <div class="knob-control-wrapper">
+                          <div class="dial-container">
+                            <div class="dial-body" id="dial-dest-filter">
+                              <div class="dial-indicator"></div>
+                            </div>
+                          </div>
+                          <span class="dial-readout" id="lbl-dest-filter">1000Hz</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="patch-port-group destination-item">
+                      <div class="patch-jack-in" id="jack-in-volume" data-destination="volume">
+                        <span class="jack-socket"></span>
+                      </div>
+                      <div class="dest-control-container">
+                        <span class="jack-label">VOLUME</span>
+                        <div class="knob-control-wrapper">
+                          <div class="dial-container">
+                            <div class="dial-body" id="dial-dest-volume">
+                              <div class="dial-indicator"></div>
+                            </div>
+                          </div>
+                          <span class="dial-readout" id="lbl-dest-volume">100%</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Depth slider -->
+              <div class="patch-controls">
+                <span class="control-label">MODULATION DEPTH</span>
+                <div class="slider-horizontal-container">
+                  <input type="range" class="slider-horizontal" id="slider-patch-depth" min="0" max="1" step="0.01" value="0.5">
+                  <span class="slider-readout" id="lbl-patch-depth">50%</span>
+                </div>
+                <div class="button-row" style="display: flex; gap: 12px; width: 100%; justify-content: center; margin-top: 16px;">
+                  <button class="btn-action" id="btn-patch-trigger">Trigger Modulation Note</button>
+                  <button class="btn-action secondary" id="btn-clear-cables">Disconnect Cables</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 8 Workspace: ADSR Envelope Visualizer & Quiz -->
+          <div class="workspace-page" id="slide-right-8">
+            <div class="glass-card">
+              <h2 class="widget-title">ADSR Vector Node Grid</h2>
+              <div class="canvas-wrapper">
+                <canvas id="canvas-s8-envelope" class="visualizer-canvas envelope-editor"></canvas>
+              </div>
+              
+              <!-- Envelope Mode Selector -->
+              <div class="envelope-mode-selector" style="display: flex; flex-direction: column; align-items: center; gap: 6px; margin: 12px 0 16px 0;">
+                <span class="control-label" style="font-size: 0.75rem; letter-spacing: 0.5px;">ENVELOPE TARGET</span>
+                <div class="button-group">
+                  <button class="btn-preset active" id="btn-env-mode-vca" data-mode="vca">Amplitude (VCA)</button>
+                  <button class="btn-preset" id="btn-env-mode-vcf" data-mode="vcf">Filter Cutoff (VCF)</button>
+                </div>
+              </div>
+              
+              <!-- Slider equivalents for visual envelope (synced in JS) -->
+              <div class="envelope-sliders-row">
+                <div class="slider-vertical-wrapper small">
+                  <span class="slider-val" id="lbl-env-a">0.10s</span>
+                  <input type="range" class="slider-vertical" id="slider-env-a" min="0" max="1" step="0.001" value="0.218" orient="vertical">
+                  <span class="slider-lbl">Attack</span>
+                </div>
+                <div class="slider-vertical-wrapper small">
+                  <span class="slider-val" id="lbl-env-d">0.30s</span>
+                  <input type="range" class="slider-vertical" id="slider-env-d" min="0" max="1" step="0.001" value="0.384" orient="vertical">
+                  <span class="slider-lbl">Decay</span>
+                </div>
+                <div class="slider-vertical-wrapper small">
+                  <span class="slider-val" id="lbl-env-s">0.70</span>
+                  <input type="range" class="slider-vertical" id="slider-env-s" min="0.0" max="1.0" step="0.01" value="0.70" orient="vertical">
+                  <span class="slider-lbl">Sustain</span>
+                </div>
+                <div class="slider-vertical-wrapper small">
+                  <span class="slider-val" id="lbl-env-r">0.50s</span>
+                  <input type="range" class="slider-vertical" id="slider-env-r" min="0" max="1" step="0.001" value="0.406" orient="vertical">
+                  <span class="slider-lbl">Release</span>
+                </div>
+              </div>
+
+
+
+              <div class="keybed-container" id="keybed-s8"></div>
+            </div>
+          </div>
+
+          <!-- Slide 9 Workspace: VCF Filter Types & Slopes -->
+          <div class="workspace-page" id="slide-right-9">
+            <div class="glass-card">
+              <h2 class="widget-title">Filter Types & Slopes</h2>
+              <div class="canvas-wrapper">
+                <canvas id="canvas-s9-filter-types" class="visualizer-canvas filter-graph"></canvas>
+              </div>
+              
+              <div class="filter-controls-grid">
+                <div class="control-box">
+                  <span class="control-label">FILTER TYPE</span>
+                  <div class="waveform-btn-group">
+                    <button class="btn-filter-type active" id="btn-f9-lpf" data-filtertype="lowpass">Low Pass</button>
+                    <button class="btn-filter-type" id="btn-f9-hpf" data-filtertype="highpass">High Pass</button>
+                    <button class="btn-filter-type" id="btn-f9-bpf" data-filtertype="bandpass">Band Pass</button>
+                  </div>
+                </div>
+
+                <div class="control-box" id="slope-control-box">
+                  <span class="control-label">LPF SLOPE (STEEPNESS)</span>
+                  <div class="waveform-btn-group">
+                    <button class="btn-filter-slope" id="btn-f9-1pole" data-filterslope="1-pole">1-Pole (-6dB)</button>
+                    <button class="btn-filter-slope active" id="btn-f9-2pole" data-filterslope="2-pole">2-Pole (-12dB)</button>
+                    <button class="btn-filter-slope" id="btn-f9-4pole" data-filterslope="4-pole">4-Pole (-24dB)</button>
+                  </div>
+                </div>
+
+                <div class="control-box span-all" id="cutoff-control-box">
+                  <span class="control-label">CUTOFF FREQUENCY</span>
+                  <div class="slider-horizontal-container">
+                    <input type="range" class="slider-horizontal" id="slider-s9-cutoff" min="20" max="15000" step="1" value="1000">
+                    <span class="slider-readout" id="lbl-s9-cutoff">1000 Hz</span>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Keybed -->
+              <div class="keybed-container" id="keybed-s9"></div>
+            </div>
+          </div>
+
+          <!-- Slide 10 Workspace: VCF Filter XY Pad -->
+          <div class="workspace-page" id="slide-right-10">
+            <div class="glass-card">
+              <h2 class="widget-title">Filter Cutoff vs. Resonance Grid</h2>
+              <div class="canvas-wrapper pad-canvas-wrapper">
+                <canvas id="canvas-s10-filter" class="visualizer-canvas filter-graph"></canvas>
+                <!-- Drag handle layer overlay -->
+                <div class="xy-pad-overlay" id="vcf-xy-pad">
+                  <div class="xy-pad-cursor" id="vcf-xy-cursor"></div>
+                </div>
+              </div>
+              <div class="xy-readouts">
+                <span class="readout-box font-mono">Cutoff (X): <span id="lbl-xy-cutoff" class="text-cyan">1000 Hz</span></span>
+                <span class="readout-box font-mono">Resonance (Y): <span id="lbl-xy-res" class="text-purple">1.0</span></span>
+              </div>
+              <p class="display-note">Drag cursor: X controls Lowpass Cutoff Frequency (20Hz - 15,000Hz). Y controls Resonance / Q Peak factor (0.7 - 15.0).</p>
+              
+              <!-- Keybed -->
+              <div class="keybed-container" id="keybed-s10"></div>
+            </div>
+          </div>
+
+          <!-- Slide 11 Workspace: LFO Vector Monitor -->
+          <div class="workspace-page" id="slide-right-11">
+            <div class="glass-card">
+              <h2 class="widget-title">LFO Cycle Vector Monitor</h2>
+              <div class="canvas-wrapper">
+                <canvas id="canvas-s11-lfo" class="visualizer-canvas"></canvas>
+              </div>
+
+              <div class="lfo-controls-grid">
+                <div class="control-box">
+                  <span class="control-label">LFO WAVE SHAPE</span>
+                  <div class="waveform-btn-group">
+                    <button class="btn-lfo-wave active" id="btn-lfow-sine" data-lfowave="sine">Sine</button>
+                    <button class="btn-lfo-wave" id="btn-lfow-tri" data-lfowave="triangle">Triangle</button>
+                    <button class="btn-lfo-wave" id="btn-lfow-saw" data-lfowave="sawtooth">Sawtooth</button>
+                    <button class="btn-lfo-wave" id="btn-lfow-sqr" data-lfowave="square">Square</button>
+                  </div>
+                </div>
+
+                <div class="control-box">
+                  <span class="control-label">LFO RATE / SPEED</span>
+                  <div class="slider-horizontal-container">
+                    <input type="range" class="slider-horizontal" id="slider-s11-rate" min="0.1" max="20.0" step="0.1" value="2.0">
+                    <span class="slider-readout" id="lbl-s11-rate">2.0 Hz</span>
+                  </div>
+                </div>
+
+                <div class="control-box">
+                  <span class="control-label">LFO DESTINATION</span>
+                  <div class="waveform-btn-group">
+                    <button class="btn-lfo-dest active" id="btn-lfod-none" data-lfodest="none">None</button>
+                    <button class="btn-lfo-dest" id="btn-lfod-pitch" data-lfodest="pitch">Pitch</button>
+                    <button class="btn-lfo-dest" id="btn-lfod-filter" data-lfodest="filter">Filter</button>
+                    <button class="btn-lfo-dest" id="btn-lfod-volume" data-lfodest="volume">Volume</button>
+                  </div>
+                </div>
+
+                <div class="control-box">
+                  <span class="control-label">LFO DEPTH</span>
+                  <div class="slider-horizontal-container">
+                    <input type="range" class="slider-horizontal" id="slider-s11-depth" min="0" max="1" step="0.01" value="0.5">
+                    <span class="slider-readout" id="lbl-s11-depth">50%</span>
+                  </div>
+                </div>
+              </div>
+
+              <p class="display-note">This visualization tracks the low-frequency control signal. Play notes on the keybed below to hear the modulation in real-time!</p>
+              
+              <!-- Keybed -->
+              <div class="keybed-container" id="keybed-s11"></div>
+            </div>
+          </div>
+
+          <!-- Slide 12 Workspace: Consolidated Master Playground Console -->
+          <div class="workspace-page" id="slide-right-12">
+            <div class="glass-card pg-card">
+              <div class="pg-header">
+                <h2 class="widget-title">Master Synthesizer Console</h2>
+                <div class="visualizer-toggle-group">
+                  <button class="btn-toggle active" id="btn-vis-scope">OSCILLOSCOPE</button>
+                  <button class="btn-toggle" id="btn-vis-fft">SPECTRUM (FFT)</button>
+                </div>
+              </div>
+              
+              <!-- Screen visualizer area -->
+              <div class="canvas-wrapper pg-canvas-wrapper">
+                <canvas id="canvas-s12-master" class="visualizer-canvas"></canvas>
+              </div>
+
+              <!-- Parameter matrix layout grid -->
+              <div class="pg-controls-grid">
+                
+                <!-- Col 1: VCO / Generator -->
+                <div class="pg-col">
+                  <div class="pg-panel-title">VCO OSCILLATOR</div>
+                  
+                  <div class="pg-control-box">
+                    <label class="control-label">WAVEFORM</label>
+                    <div class="waveform-btn-group btn-group-pg" id="btn-group-pg-wave">
+                      <button class="btn-wave-select" data-wave="sine">Sine</button>
+                      <button class="btn-wave-select" data-wave="triangle">Tri</button>
+                      <button class="btn-wave-select active" data-wave="sawtooth">Saw</button>
+                      <button class="btn-wave-select" data-wave="pulse">Pulse</button>
+                    </div>
+                  </div>
+
+                  <div class="pg-control-box" id="pg-pw-box" style="display:none;">
+                    <label class="control-label">PULSE WIDTH</label>
+                    <div style="display: flex; justify-content: center; padding: 4px 0;">
+                      <div class="knob-control-wrapper">
+                        <div class="dial-container">
+                          <div class="dial-body interactive-dial" id="dial-pg-pw" data-min="0.10" data-max="0.50" data-value="0.50" data-step="0.001" data-scale="linear">
+                            <div class="dial-indicator"></div>
+                          </div>
+                        </div>
+                        <span class="dial-readout" id="lbl-pg-pw">50%</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="pg-control-box">
+                    <label class="control-label">NOISE MIX (OSC vs NOISE)</label>
+                    <div style="display: flex; justify-content: center; padding: 4px 0;">
+                      <div class="knob-control-wrapper">
+                        <div class="dial-container">
+                          <div class="dial-body interactive-dial" id="dial-pg-noise-mix" data-min="0" data-max="1" data-value="0.0" data-step="0.01" data-scale="linear">
+                            <div class="dial-indicator"></div>
+                          </div>
+                        </div>
+                        <span class="dial-readout" id="lbl-pg-noise-mix">100% Osc</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="pg-control-box">
+                    <label class="control-label">NOISE COLOR</label>
+                    <div class="waveform-btn-group btn-group-pg" id="btn-group-pg-noise-color">
+                      <button class="btn-wave-select active" data-noisecolor="white">White</button>
+                      <button class="btn-wave-select" data-noisecolor="pink">Pink</button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Col 2: VCF Filter & VCA/VCF ADSR Envelopes -->
+                <div class="pg-col">
+                  <div class="pg-panel-title">VCF & ADSR ENVELOPES</div>
+                  
+                  <div class="pg-control-box">
+                    <label class="control-label">FILTER CUTOFF & RESONANCE</label>
+                    <div style="display: flex; justify-content: space-around; padding: 4px 0;">
+                      <div class="knob-control-wrapper">
+                        <div class="dial-container">
+                          <div class="dial-body interactive-dial" id="dial-pg-cutoff" data-min="20" data-max="15000" data-value="2000" data-step="1" data-scale="log">
+                            <div class="dial-indicator"></div>
+                          </div>
+                        </div>
+                        <span class="control-label" style="font-size:0.55rem; color:var(--text-muted); text-align:center;">CUTOFF</span>
+                        <span class="dial-readout" id="lbl-pg-cutoff">2000 Hz</span>
+                      </div>
+                      <div class="knob-control-wrapper">
+                        <div class="dial-container">
+                          <div class="dial-body interactive-dial" id="dial-pg-res" data-min="0.7" data-max="15.0" data-value="1.0" data-step="0.1" data-scale="linear">
+                            <div class="dial-indicator"></div>
+                          </div>
+                        </div>
+                        <span class="control-label" style="font-size:0.55rem; color:var(--text-muted); text-align:center;">RESONANCE</span>
+                        <span class="dial-readout" id="lbl-pg-res">1.0</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Small ADSR sliders VCA -->
+                  <div class="pg-control-box">
+                    <label class="control-label">AMPLITUDE ADSR (VCA)</label>
+                    <div class="pg-adsr-grid">
+                      <div class="adsr-fader">
+                        <span class="fader-lbl">A</span>
+                        <input type="range" class="slider-vertical pg-adsr" id="slider-pg-vca-a" min="0" max="1" step="0.001" value="0.218">
+                        <span class="fader-val" id="lbl-pg-vca-a">0.10s</span>
+                      </div>
+                      <div class="adsr-fader">
+                        <span class="fader-lbl">D</span>
+                        <input type="range" class="slider-vertical pg-adsr" id="slider-pg-vca-d" min="0" max="1" step="0.001" value="0.384">
+                        <span class="fader-val" id="lbl-pg-vca-d">0.30s</span>
+                      </div>
+                      <div class="adsr-fader">
+                        <span class="fader-lbl">S</span>
+                        <input type="range" class="slider-vertical pg-adsr" id="slider-pg-vca-s" min="0.0" max="1.0" step="0.01" value="0.70">
+                        <span class="fader-val" id="lbl-pg-vca-s">0.70</span>
+                      </div>
+                      <div class="adsr-fader">
+                        <span class="fader-lbl">R</span>
+                        <input type="range" class="slider-vertical pg-adsr" id="slider-pg-vca-r" min="0" max="1" step="0.001" value="0.406">
+                        <span class="fader-val" id="lbl-pg-vca-r">0.50s</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Small ADSR sliders VCF -->
+                  <div class="pg-control-box">
+                    <label class="control-label">FILTER ADSR (VCF)</label>
+                    <div class="pg-adsr-grid">
+                      <div class="adsr-fader">
+                        <span class="fader-lbl">A</span>
+                        <input type="range" class="slider-vertical pg-adsr" id="slider-pg-vcf-a" min="0" max="1" step="0.001" value="0.218">
+                        <span class="fader-val" id="lbl-pg-vcf-a">0.10s</span>
+                      </div>
+                      <div class="adsr-fader">
+                        <span class="fader-lbl">D</span>
+                        <input type="range" class="slider-vertical pg-adsr" id="slider-pg-vcf-d" min="0" max="1" step="0.001" value="0.384">
+                        <span class="fader-val" id="lbl-pg-vcf-d">0.30s</span>
+                      </div>
+                      <div class="adsr-fader">
+                        <span class="fader-lbl">S</span>
+                        <input type="range" class="slider-vertical pg-adsr" id="slider-pg-vcf-s" min="0.0" max="1.0" step="0.01" value="0.70">
+                        <span class="fader-val" id="lbl-pg-vcf-s">0.70</span>
+                      </div>
+                      <div class="adsr-fader">
+                        <span class="fader-lbl">R</span>
+                        <input type="range" class="slider-vertical pg-adsr" id="slider-pg-vcf-r" min="0" max="1" step="0.001" value="0.406">
+                        <span class="fader-val" id="lbl-pg-vcf-r">0.50s</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Col 3: LFO & Routings -->
+                <div class="pg-col">
+                  <div class="pg-panel-title">LFO MODULATION</div>
+                  
+                  <div class="pg-control-box">
+                    <label class="control-label">LFO SHAPE</label>
+                    <div class="waveform-btn-group btn-group-pg" id="btn-group-pg-lfo-wave">
+                      <button class="btn-wave-select active" data-lfowave="sine">Sine</button>
+                      <button class="btn-wave-select" data-lfowave="triangle">Tri</button>
+                      <button class="btn-wave-select" data-lfowave="sawtooth">Saw</button>
+                      <button class="btn-wave-select" data-lfowave="square">Sqr</button>
+                    </div>
+                  </div>
+
+                  <div class="pg-control-box">
+                    <label class="control-label">LFO RATE (SPEED)</label>
+                    <div style="display: flex; justify-content: center; padding: 4px 0;">
+                      <div class="knob-control-wrapper">
+                        <div class="dial-container">
+                          <div class="dial-body interactive-dial" id="dial-pg-lfo-rate" data-min="0.1" data-max="20.0" data-value="2.0" data-step="0.1" data-scale="linear">
+                            <div class="dial-indicator"></div>
+                          </div>
+                        </div>
+                        <span class="dial-readout" id="lbl-pg-lfo-rate">2.0 Hz</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="pg-control-box">
+                    <label class="control-label">LFO DEPTH</label>
+                    <div style="display: flex; justify-content: center; padding: 4px 0;">
+                      <div class="knob-control-wrapper">
+                        <div class="dial-container">
+                          <div class="dial-body interactive-dial" id="dial-pg-lfo-depth" data-min="0" data-max="1" data-value="0.0" data-step="0.01" data-scale="linear">
+                            <div class="dial-indicator"></div>
+                          </div>
+                        </div>
+                        <span class="dial-readout" id="lbl-pg-lfo-depth">0%</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="pg-control-box">
+                    <label class="control-label">LFO DESTINATION</label>
+                    <div class="waveform-btn-group btn-group-pg" id="btn-group-pg-lfo-dest">
+                      <button class="btn-wave-select active" data-lfodest="none">None</button>
+                      <button class="btn-wave-select" data-lfodest="pitch">Pitch</button>
+                      <button class="btn-wave-select" data-lfodest="filter">Filter</button>
+                      <button class="btn-wave-select" data-lfodest="volume">Amp</button>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+              <!-- Keybed -->
+              <div class="keybed-container" id="keybed-s12"></div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Master Deck Slide Navigation Controls -->
+        <footer class="deck-controls" aria-label="Deck controls">
+          <button class="btn-deck nav" id="btn-deck-prev" disabled>
+            <span class="nav-arrow">◄</span> PREV
+          </button>
+          
+          <div class="deck-progress-container">
+            <div class="deck-slide-info font-mono" id="deck-slide-info">
+              01. Intro to Synthesis
+            </div>
+            <div class="deck-progress-segments" id="deck-progress-segments" role="navigation" aria-label="Slide navigation">
+              <button class="deck-segment" data-slide="0" data-title="01. Intro to Synthesis" data-desc="Overview of synthesis methods." aria-label="Slide 1" title="01. Intro to Synthesis: Overview of synthesis methods."></button>
+              <button class="deck-segment" data-slide="1" data-title="02. Anatomy of a Synth" data-desc="Signal flow of VCO, VCF, VCA, and modulators." aria-label="Slide 2" title="02. Anatomy of a Synth: Signal flow of VCO, VCF, VCA, and modulators."></button>
+              <button class="deck-segment" data-slide="2" data-title="03. The Oscillator (VCO)" data-desc="Exploring pitch, frequency, and waveforms." aria-label="Slide 3" title="03. The Oscillator (VCO): Exploring pitch, frequency, and waveforms."></button>
+              <button class="deck-segment" data-slide="3" data-title="04. Additive Synthesis" data-desc="Stacking harmonic frequencies to build timbres." aria-label="Slide 4" title="04. Additive Synthesis: Stacking harmonic frequencies to build timbres."></button>
+              <button class="deck-segment" data-slide="4" data-title="05. Waveforms & PW" data-desc="Customizing wave shapes and pulse width." aria-label="Slide 5" title="05. Waveforms & PW: Customizing wave shapes and pulse width."></button>
+              <button class="deck-segment" data-slide="5" data-title="06. Noise Generators" data-desc="Generating noise and percussive transients." aria-label="Slide 6" title="06. Noise Generators: Generating noise and percussive transients."></button>
+              <button class="deck-segment" data-slide="6" data-title="07. Modulation Concepts" data-desc="Routing LFO/Envelope sources to destinations." aria-label="Slide 7" title="07. Modulation Concepts: Routing LFO/Envelope sources to destinations."></button>
+              <button class="deck-segment" data-slide="7" data-title="08. Envelope ADSR" data-desc="Shaping amplitude over time (ADSR)." aria-label="Slide 8" title="08. Envelope ADSR: Shaping amplitude over time (ADSR)."></button>
+              <button class="deck-segment" data-slide="8" data-title="09. Filter Types & Slopes" data-desc="Auditioning LPF, HPF, BPF and low-pass filter slopes." aria-label="Slide 9" title="09. Filter Types & Slopes: Auditioning LPF, HPF, BPF and low-pass filter slopes."></button>
+              <button class="deck-segment" data-slide="9" data-title="10. Filter Resonance" data-desc="Exploring resonance (Q) and 2D filter sweeps." aria-label="Slide 10" title="10. Filter Resonance: Exploring resonance (Q) and 2D filter sweeps."></button>
+              <button class="deck-segment" data-slide="10" data-title="11. Low Frequency Osc" data-desc="Sub-audio modulation and LFO rate/shapes." aria-label="Slide 11" title="11. Low Frequency Osc: Sub-audio modulation and LFO rate/shapes."></button>
+              <button class="deck-segment" data-slide="11" data-title="12. Master Console" data-desc="Integrated playground mixer console." aria-label="Slide 12" title="12. Master Console: Integrated playground mixer console."></button>
+            </div>
+          </div>
+          
+          <button class="btn-deck nav" id="btn-deck-next">
+            NEXT <span class="nav-arrow">►</span>
+          </button>
+        </footer>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- Load Modules -->
+  <script src="visualizer.js"></script>
+  <script src="media.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

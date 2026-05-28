@@ -1,0 +1,17 @@
+{
+  "name": "synthdeck",
+  "version": "1.0.0",
+  "description": "Interactive Subtractive Synthesis Courseware",
+  "scripts": {
+    "dev": "npx -y serve ./"
+  },
+  "keywords": [
+    "synthesis",
+    "subtractive",
+    "web-audio-api",
+    "educational",
+    "courseware"
+  ],
+  "author": "Antigravity",
+  "license": "ISC"
+}
