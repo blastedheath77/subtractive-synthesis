@@ -321,13 +321,9 @@ class AudioEngine {
     if (!this.isInitialized) return;
     this.stopAllVoices();
     
-    // Establish a simple repeating synthesizer loop
-    const now = this.ctx.currentTime;
-    
-    // We will spawn a single repeating note trigger
-    this.s2LoopInterval = setInterval(() => {
+    // Define the note playback logic
+    const playNote = () => {
       const time = this.ctx.currentTime;
-      
       const osc = this.ctx.createOscillator();
       const filter = this.ctx.createBiquadFilter();
       const gain = this.ctx.createGain();
@@ -410,8 +406,11 @@ class AudioEngine {
       
       osc.start(time);
       osc.stop(time + oscStopOffset);
-      
-    }, 2500);
+    };
+
+    // Play once immediately, then schedule repeat interval
+    playNote();
+    this.s2LoopInterval = setInterval(playNote, 2500);
   }
 
   stopSlide2Loop() {
