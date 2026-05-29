@@ -536,6 +536,11 @@ function updateActiveSlideDOM(index) {
 }
 
 function cleanupSlide(index) {
+  // Reset master reverb level to dry
+  if (synth && typeof synth.updatePgReverb === "function") {
+    synth.updatePgReverb(0.0);
+  }
+
   // Halt arpeggiator if running
   if (typeof stopArpeggiator === "function") {
     stopArpeggiator();
@@ -2272,6 +2277,14 @@ function initSlide12() {
     updateLfoParams();
   });
 
+  const reverbDial = document.getElementById("dial-pg-reverb");
+  const reverbLbl = document.getElementById("lbl-pg-reverb");
+  reverbDial.addEventListener("dialchange", () => {
+    const val = parseFloat(reverbDial.dataset.value);
+    reverbLbl.textContent = `${Math.round(val)}%`;
+    synth.updatePgReverb(val / 100);
+  });
+
   function updateLfoParams() {
     const rate = parseFloat(lfoRateDial.dataset.value || 2.0);
     const depth = parseFloat(lfoDepthDial.dataset.value || 0.0);
@@ -2326,6 +2339,9 @@ function initSlide12() {
 
   // Initial Sync
   updateLfoParams();
+  if (reverbDial) {
+    synth.updatePgReverb(parseFloat(reverbDial.dataset.value || 0.0) / 100);
+  }
 
   // Bind Arpeggiator controls
   initArpeggiatorControls();

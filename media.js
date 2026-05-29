@@ -8,6 +8,10 @@ class AudioEngine {
     this.ctx = null;
     this.masterGain = null;
     this.analyser = null;
+    this.masterHPF = null;
+    this.reverbNode = null;
+    this.reverbDryGain = null;
+    this.reverbWetGain = null;
     this.isInitialized = false;
     
     // Active voice tracking (frequency -> Voice object)
@@ -78,8 +82,34 @@ class AudioEngine {
     this.masterGain = this.ctx.createGain();
     this.masterGain.gain.setValueAtTime(0.4, this.ctx.currentTime); // Safe volume
     
-    // Routing: Voices -> MasterGain -> Analyser -> Destination
-    this.masterGain.connect(this.analyser);
+    // Master 30Hz High-Pass Filter (removes subsonic rumble and DC offset)
+    this.masterHPF = this.ctx.createBiquadFilter();
+    this.masterHPF.type = "highpass";
+    this.masterHPF.frequency.setValueAtTime(30, this.ctx.currentTime);
+    
+    // Reverb Impulse Response (synthetic room reverb)
+    const reverbIR = this.createReverbImpulseResponse(1.8, 4.5); // 1.8s time, 4.5 decay
+    this.reverbNode = this.ctx.createConvolver();
+    this.reverbNode.buffer = reverbIR;
+    
+    this.reverbDryGain = this.ctx.createGain();
+    this.reverbWetGain = this.ctx.createGain();
+    
+    // Set default values (completely dry)
+    this.reverbDryGain.gain.setValueAtTime(1.0, this.ctx.currentTime);
+    this.reverbWetGain.gain.setValueAtTime(0.0, this.ctx.currentTime);
+    
+    // Routing:
+    // masterGain -> reverbDryGain -> masterHPF
+    // masterGain -> reverbNode -> reverbWetGain -> masterHPF
+    this.masterGain.connect(this.reverbDryGain);
+    this.reverbDryGain.connect(this.masterHPF);
+    
+    this.masterGain.connect(this.reverbNode);
+    this.reverbNode.connect(this.reverbWetGain);
+    this.reverbWetGain.connect(this.masterHPF);
+    
+    this.masterHPF.connect(this.analyser);
     this.analyser.connect(this.ctx.destination);
     
     // Pre-generate noise buffers
@@ -91,6 +121,25 @@ class AudioEngine {
     if (this.ctx.state === "suspended") {
       await this.ctx.resume();
     }
+  }
+
+  /**
+   * Synthesizes a stereo exponential room impulse response buffer for the Convolver reverb
+   */
+  createReverbImpulseResponse(duration, decay) {
+    const sampleRate = this.ctx.sampleRate;
+    const length = sampleRate * duration;
+    const impulse = this.ctx.createBuffer(2, length, sampleRate);
+    const left = impulse.getChannelData(0);
+    const right = impulse.getChannelData(1);
+    
+    for (let i = 0; i < length; i++) {
+      const pct = i / length;
+      const env = Math.exp(-pct * decay);
+      left[i] = (Math.random() * 2 - 1) * env;
+      right[i] = (Math.random() * 2 - 1) * env;
+    }
+    return impulse;
   }
 
   /**
@@ -719,6 +768,22 @@ class AudioEngine {
         voice.filter.frequency.linearRampToValueAtTime(targetSustain, now + 0.05);
       }
     });
+  }
+
+  updatePgReverb(blend) {
+    if (!this.isInitialized) return;
+    const now = this.ctx.currentTime;
+    
+    const dryVal = 1.0 - blend;
+    const wetVal = blend * 0.7; // Max reverb volume of 70% wet to avoid excessive wash
+    
+    this.reverbDryGain.gain.cancelScheduledValues(now);
+    this.reverbDryGain.gain.setValueAtTime(this.reverbDryGain.gain.value, now);
+    this.reverbDryGain.gain.linearRampToValueAtTime(dryVal, now + 0.05);
+    
+    this.reverbWetGain.gain.cancelScheduledValues(now);
+    this.reverbWetGain.gain.setValueAtTime(this.reverbWetGain.gain.value, now);
+    this.reverbWetGain.gain.linearRampToValueAtTime(wetVal, now + 0.05);
   }
 
   updatePgLfo(rate, depth, wave, destination) {
