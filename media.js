@@ -774,8 +774,8 @@ class AudioEngine {
     if (!this.isInitialized) return;
     const now = this.ctx.currentTime;
     
-    const dryVal = 1.0 - blend;
-    const wetVal = blend * 0.7; // Max reverb volume of 70% wet to avoid excessive wash
+    const dryVal = 1.0;
+    const wetVal = blend * 1.5; // Up to 150% wet level to compensate for convolver decay and make reverb lush
     
     this.reverbDryGain.gain.cancelScheduledValues(now);
     this.reverbDryGain.gain.setValueAtTime(this.reverbDryGain.gain.value, now);
