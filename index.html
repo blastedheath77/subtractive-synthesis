@@ -976,6 +976,49 @@
                   </div>
                 </div>
 
+                <!-- Col 4: Arpeggiator -->
+                <div class="pg-col">
+                  <div class="pg-panel-title">ARPEGGIATOR</div>
+                  
+                  <div class="pg-control-box">
+                    <label class="control-label">ARPEGGIATOR ON/OFF</label>
+                    <div class="waveform-btn-group btn-group-pg" id="btn-group-pg-arp-toggle-wrapper">
+                      <button class="btn-wave-select" id="btn-pg-arp-toggle" style="font-weight: bold;">START</button>
+                    </div>
+                  </div>
+
+                  <div class="pg-control-box">
+                    <label class="control-label">PLAY MODE</label>
+                    <div class="waveform-btn-group btn-group-pg" id="btn-group-pg-arp-mode">
+                      <button class="btn-wave-select active" data-arpmode="up">Up</button>
+                      <button class="btn-wave-select" data-arpmode="down">Down</button>
+                      <button class="btn-wave-select" data-arpmode="play">Order</button>
+                    </div>
+                  </div>
+
+                  <div class="pg-control-box">
+                    <label class="control-label">TEMPO (SPEED)</label>
+                    <div style="display: flex; justify-content: center; padding: 4px 0;">
+                      <div class="knob-control-wrapper">
+                        <div class="dial-container">
+                          <div class="dial-body interactive-dial" id="dial-pg-arp-tempo" data-min="60" data-max="240" data-value="120" data-step="1" data-scale="linear">
+                            <div class="dial-indicator"></div>
+                          </div>
+                        </div>
+                        <span class="dial-readout" id="lbl-pg-arp-tempo">120 BPM</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="pg-control-box">
+                    <label class="control-label">PATTERN MEMORY</label>
+                    <div style="display: flex; flex-direction: column; gap: 8px; align-items: center; padding: 4px 0;">
+                      <span id="lbl-pg-arp-count" style="font-family: var(--font-dashboard); font-size: 0.65rem; color: var(--primary);">0 notes stored</span>
+                      <button class="btn-wave-select" id="btn-pg-arp-clear" style="width: 100%; font-size: 0.75rem; padding: 6px 2px;">CLEAR</button>
+                    </div>
+                  </div>
+                </div>
+
               </div>
 
               <!-- Keybed -->

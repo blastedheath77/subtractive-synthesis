@@ -39,7 +39,15 @@ const state = {
   s10CanvasId: null,
   
   // Slide 11 LFO (previously Slide 10)
-  s11AnimationId: null
+  s11AnimationId: null,
+
+  // Arpeggiator (Slide 12)
+  arpEnabled: false,
+  arpPattern: [],
+  arpMode: "up",
+  arpTempo: 120,
+  arpTimer: null,
+  arpStepIndex: 0
 };
 
 // Musical note frequencies mapping
@@ -305,6 +313,19 @@ function triggerNoteOn(basePitch, sourceId) {
   
   // Synthesizer hooks based on slide index
   const slideNum = state.currentSlide + 1;
+  
+  if (slideNum === 12 && state.arpEnabled) {
+    // Record note into pattern
+    state.arpPattern.push(activePitch);
+    updateArpPatternUI();
+    
+    // Highlight UI piano key visual status across all keybeds using data-base-pitch
+    document.querySelectorAll(`[data-base-pitch="${basePitch}"]`).forEach(el => {
+      el.classList.add("active");
+    });
+    return;
+  }
+  
   synth.playNote(activePitch, slideNum);
   
   if (state.currentSlide === 6) {
@@ -326,7 +347,10 @@ function triggerNoteOff(sourceId) {
   const activePitch = state.pressedKeys.get(sourceId);
   state.pressedKeys.delete(sourceId);
   
-  synth.releaseNote(activePitch);
+  const slideNum = state.currentSlide + 1;
+  if (!(slideNum === 12 && state.arpEnabled)) {
+    synth.releaseNote(activePitch);
+  }
   
   if (state.currentSlide === 6) {
     state.s7NoteReleasedTime = Date.now();
@@ -511,6 +535,11 @@ function updateActiveSlideDOM(index) {
 }
 
 function cleanupSlide(index) {
+  // Halt arpeggiator if running
+  if (typeof stopArpeggiator === "function") {
+    stopArpeggiator();
+  }
+
   // Halt synth sounds
   synth.stopAllVoices();
   
@@ -2296,6 +2325,199 @@ function initSlide12() {
 
   // Initial Sync
   updateLfoParams();
+
+  // Bind Arpeggiator controls
+  initArpeggiatorControls();
+}
+
+/* --------------------------------------------------------------------------
+   Slide 12: Arpeggiator Sequencer Engine
+   -------------------------------------------------------------------------- */
+function initArpeggiatorControls() {
+  const toggleBtn = document.getElementById("btn-pg-arp-toggle");
+  const modeButtons = document.querySelectorAll("#btn-group-pg-arp-mode .btn-wave-select");
+  const tempoDial = document.getElementById("dial-pg-arp-tempo");
+  const tempoLbl = document.getElementById("lbl-pg-arp-tempo");
+  const clearBtn = document.getElementById("btn-pg-arp-clear");
+
+  if (!toggleBtn) return; // Guard for non-playground slides
+
+  // Toggle button listener
+  toggleBtn.addEventListener("click", () => {
+    if (state.arpEnabled) {
+      stopArpeggiator();
+    } else {
+      startArpeggiator();
+    }
+  });
+
+  // Mode select listeners
+  modeButtons.forEach(btn => {
+    btn.addEventListener("click", (e) => {
+      modeButtons.forEach(b => b.classList.remove("active"));
+      e.currentTarget.classList.add("active");
+      state.arpMode = e.currentTarget.dataset.arpmode;
+      state.arpStepIndex = 0; // Reset steps on mode switch
+    });
+  });
+
+  // Tempo dial listener
+  tempoDial.addEventListener("dialchange", () => {
+    const val = Math.round(parseFloat(tempoDial.dataset.value));
+    tempoLbl.textContent = `${val} BPM`;
+    state.arpTempo = val;
+    if (state.arpEnabled) {
+      // Re-trigger timer immediately with new tempo rate
+      startArpTimer();
+    }
+  });
+
+  // Clear button listener
+  clearBtn.addEventListener("click", () => {
+    state.arpPattern = [];
+    state.arpStepIndex = 0;
+    updateArpPatternUI();
+    clearArpKeysHighlight();
+    
+    // Release any lingering active voices
+    if (window.synth) {
+      synth.activeVoices.forEach((voice, freq) => {
+        synth.releaseNote(freq);
+      });
+    }
+  });
+}
+
+function startArpeggiator() {
+  state.arpEnabled = true;
+  state.arpStepIndex = 0;
+  
+  const toggleBtn = document.getElementById("btn-pg-arp-toggle");
+  if (toggleBtn) {
+    toggleBtn.classList.add("active");
+    toggleBtn.textContent = "STOP";
+  }
+  
+  // Release any keys currently held down to prevent mixing manual notes with sequence
+  if (window.synth) {
+    synth.activeVoices.forEach((voice, freq) => {
+      synth.releaseNote(freq);
+    });
+  }
+  clearArpKeysHighlight();
+  
+  startArpTimer();
+}
+
+function stopArpeggiator() {
+  state.arpEnabled = false;
+  stopArpTimer();
+  
+  const toggleBtn = document.getElementById("btn-pg-arp-toggle");
+  if (toggleBtn) {
+    toggleBtn.classList.remove("active");
+    toggleBtn.textContent = "START";
+  }
+  
+  // Release any active voices playing from arpeggiator
+  if (window.synth) {
+    synth.activeVoices.forEach((voice, freq) => {
+      synth.releaseNote(freq);
+    });
+  }
+  clearArpKeysHighlight();
+}
+
+function startArpTimer() {
+  if (state.arpTimer) {
+    clearInterval(state.arpTimer);
+    state.arpTimer = null;
+  }
+  const stepIntervalMs = (60 / state.arpTempo) * 0.5 * 1000; // 8th notes
+  state.arpTimer = setInterval(tickArpeggiator, stepIntervalMs);
+}
+
+function stopArpTimer() {
+  if (state.arpTimer) {
+    clearInterval(state.arpTimer);
+    state.arpTimer = null;
+  }
+}
+
+function updateArpPatternUI() {
+  const countLbl = document.getElementById("lbl-pg-arp-count");
+  if (countLbl) {
+    const len = state.arpPattern.length;
+    countLbl.textContent = `${len} note${len === 1 ? "" : "s"} stored`;
+  }
+}
+
+function clearArpKeysHighlight() {
+  const matchedKeys = document.querySelectorAll(`#slide-right-12 [data-pitch]`);
+  matchedKeys.forEach(el => {
+    let isPhysicallyPressed = false;
+    const freq = parseFloat(el.dataset.pitch);
+    state.pressedKeys.forEach((pressedFreq) => {
+      if (Math.abs(pressedFreq - freq) < 0.1) {
+        isPhysicallyPressed = true;
+      }
+    });
+    if (!isPhysicallyPressed) {
+      el.classList.remove("active");
+    }
+  });
+}
+
+function tickArpeggiator() {
+  if (state.arpPattern.length === 0) return;
+  if (!state.arpEnabled) return;
+
+  // Resolve active sequence sequence order
+  let activeSeq = [];
+  if (state.arpMode === "up") {
+    activeSeq = [...state.arpPattern].sort((a, b) => a - b);
+  } else if (state.arpMode === "down") {
+    activeSeq = [...state.arpPattern].sort((a, b) => b - a);
+  } else {
+    activeSeq = [...state.arpPattern]; // play order
+  }
+
+  if (state.arpStepIndex >= activeSeq.length) {
+    state.arpStepIndex = 0;
+  }
+
+  const freq = activeSeq[state.arpStepIndex];
+  
+  // Play the note
+  synth.playNote(freq, 12);
+
+  // Flash UI key corresponding to this note
+  const matchedKeys = document.querySelectorAll(`#slide-right-12 [data-pitch]`);
+  const activeKeys = Array.from(matchedKeys).filter(key => Math.abs(parseFloat(key.dataset.pitch) - freq) < 0.1);
+  activeKeys.forEach(el => el.classList.add("active"));
+
+  // Calculate step interval and gate lengths
+  const stepIntervalMs = (60 / state.arpTempo) * 0.5 * 1000;
+  const gateDurationMs = stepIntervalMs * 0.8; // 80% gate length
+
+  // Schedule release
+  setTimeout(() => {
+    synth.releaseNote(freq);
+    activeKeys.forEach(el => {
+      // Only remove visual highlight if key is not physically pressed by the user
+      let isPhysicallyPressed = false;
+      state.pressedKeys.forEach((pressedFreq) => {
+        if (Math.abs(pressedFreq - freq) < 0.1) {
+          isPhysicallyPressed = true;
+        }
+      });
+      if (!isPhysicallyPressed) {
+        el.classList.remove("active");
+      }
+    });
+  }, gateDurationMs);
+
+  state.arpStepIndex++;
 }
 
 /* --------------------------------------------------------------------------
