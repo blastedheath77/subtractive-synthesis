@@ -836,7 +836,7 @@
                   <div class="pg-panel-title">VCF & ADSR ENVELOPES</div>
                   
                   <div class="pg-control-box">
-                    <label class="control-label">FILTER CUTOFF & RESONANCE</label>
+                    <label class="control-label">FILTER CUTOFF, RESONANCE & ENV DEPTH</label>
                     <div style="display: flex; justify-content: space-around; padding: 4px 0;">
                       <div class="knob-control-wrapper">
                         <div class="dial-container">
@@ -855,6 +855,15 @@
                         </div>
                         <span class="control-label" style="font-size:0.55rem; color:var(--text-muted); text-align:center;">RESONANCE</span>
                         <span class="dial-readout" id="lbl-pg-res">1.0</span>
+                      </div>
+                      <div class="knob-control-wrapper">
+                        <div class="dial-container">
+                          <div class="dial-body interactive-dial" id="dial-pg-vcf-env-depth" data-min="-1.0" data-max="1.0" data-value="0.5" data-step="0.01" data-scale="linear">
+                            <div class="dial-indicator"></div>
+                          </div>
+                        </div>
+                        <span class="control-label" style="font-size:0.55rem; color:var(--text-muted); text-align:center;">ENV DEPTH</span>
+                        <span class="dial-readout" id="lbl-pg-vcf-env-depth">+50%</span>
                       </div>
                     </div>
                   </div>

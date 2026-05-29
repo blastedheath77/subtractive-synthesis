@@ -2199,6 +2199,15 @@ function initSlide12() {
     synth.updatePgFilter(cutoff, val);
   });
 
+  const envDepthDial = document.getElementById("dial-pg-vcf-env-depth");
+  const envDepthLbl = document.getElementById("lbl-pg-vcf-env-depth");
+  envDepthDial.addEventListener("dialchange", () => {
+    const val = parseFloat(envDepthDial.dataset.value);
+    const sign = val >= 0 ? "+" : "";
+    envDepthLbl.textContent = `${sign}${(val * 100).toFixed(0)}%`;
+    synth.updatePgEnvDepth(val);
+  });
+
   const pwDial = document.getElementById("dial-pg-pw");
   const pwLbl = document.getElementById("lbl-pg-pw");
   pwDial.addEventListener("dialchange", () => {

@@ -663,6 +663,7 @@ class AudioEngine {
         const vcaS = parseFloat(document.getElementById("slider-pg-vca-s").value);
         const vcfS = parseFloat(document.getElementById("slider-pg-vcf-s").value);
         const filterCutoff = parseFloat(document.getElementById("dial-pg-cutoff").dataset.value || 2000);
+        const vcfEnvDepth = parseFloat(document.getElementById("dial-pg-vcf-env-depth").dataset.value || 0.5);
         
         voice.gain.gain.cancelScheduledValues(now);
         voice.gain.gain.setValueAtTime(voice.gain.gain.value, now);
@@ -671,7 +672,8 @@ class AudioEngine {
         if (voice.filter) {
           voice.filter.frequency.cancelScheduledValues(now);
           voice.filter.frequency.setValueAtTime(voice.filter.frequency.value, now);
-          voice.filter.frequency.linearRampToValueAtTime(Math.min(18000, filterCutoff + vcfS * 5000), now + 0.05);
+          const targetSustain = Math.max(20, Math.min(18000, filterCutoff + vcfS * vcfEnvDepth * 10000));
+          voice.filter.frequency.linearRampToValueAtTime(targetSustain, now + 0.05);
         }
       } else {
         voice.gain.gain.cancelScheduledValues(now);
@@ -687,14 +689,32 @@ class AudioEngine {
     this.activeVoices.forEach((voice) => {
       if (voice.slideNum === 12 && voice.filter) {
         const vcfS = parseFloat(document.getElementById("slider-pg-vcf-s").value);
+        const vcfEnvDepth = parseFloat(document.getElementById("dial-pg-vcf-env-depth").dataset.value || 0.5);
         voice.filter.Q.cancelScheduledValues(now);
         voice.filter.Q.setValueAtTime(resonance, now);
         
         voice.filter.frequency.cancelScheduledValues(now);
         voice.filter.frequency.setValueAtTime(voice.filter.frequency.value, now);
         
-        const targetCutoff = voice.released ? cutoff : Math.min(18000, cutoff + vcfS * 5000);
+        const targetCutoff = voice.released ? cutoff : Math.max(20, Math.min(18000, cutoff + vcfS * vcfEnvDepth * 10000));
         voice.filter.frequency.linearRampToValueAtTime(targetCutoff, now + 0.05);
+      }
+    });
+  }
+
+  updatePgEnvDepth(envDepth) {
+    if (!this.isInitialized) return;
+    const now = this.ctx.currentTime;
+    this.activeVoices.forEach((voice) => {
+      if (voice.slideNum === 12 && voice.filter && !voice.released) {
+        const filterCutoff = parseFloat(document.getElementById("dial-pg-cutoff").dataset.value || 2000);
+        const vcfS = parseFloat(document.getElementById("slider-pg-vcf-s").value);
+        
+        voice.filter.frequency.cancelScheduledValues(now);
+        voice.filter.frequency.setValueAtTime(voice.filter.frequency.value, now);
+        
+        const targetSustain = Math.max(20, Math.min(18000, filterCutoff + vcfS * envDepth * 10000));
+        voice.filter.frequency.linearRampToValueAtTime(targetSustain, now + 0.05);
       }
     });
   }
@@ -1263,6 +1283,7 @@ class AudioEngine {
       
       const filterCutoff = parseFloat(document.getElementById("dial-pg-cutoff").dataset.value || 2000);
       const filterRes = parseFloat(document.getElementById("dial-pg-res").dataset.value || 1.0);
+      const vcfEnvDepth = parseFloat(document.getElementById("dial-pg-vcf-env-depth").dataset.value || 0.5);
       
       const lfoWave = document.querySelector("#btn-group-pg-lfo-wave .btn-wave-select.active").dataset.lfowave;
       const lfoRate = parseFloat(document.getElementById("dial-pg-lfo-rate").dataset.value || 2.0);
@@ -1349,8 +1370,10 @@ class AudioEngine {
       
       // Apply VCF Cutoff ADSR
       voice.filter.frequency.setValueAtTime(filterCutoff, now);
-      voice.filter.frequency.linearRampToValueAtTime(Math.min(18000, filterCutoff + 5000), now + vcfA);
-      voice.filter.frequency.exponentialRampToValueAtTime(Math.min(18000, filterCutoff + vcfS * 5000) + 0.01, now + vcfA + vcfD);
+      const targetPeak = Math.max(20, Math.min(18000, filterCutoff + vcfEnvDepth * 10000));
+      const targetSustain = Math.max(20, Math.min(18000, filterCutoff + vcfS * vcfEnvDepth * 10000));
+      voice.filter.frequency.linearRampToValueAtTime(targetPeak, now + vcfA);
+      voice.filter.frequency.exponentialRampToValueAtTime(targetSustain + 0.01, now + vcfA + vcfD);
       
       generatorSum.connect(voice.filter);
       voice.filter.connect(voice.gain);
