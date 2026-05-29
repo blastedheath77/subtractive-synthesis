@@ -232,7 +232,7 @@ class AudioEngine {
       
       osc.connect(filter);
       filter.connect(gain);
-      gain.connect(this.analyser);
+      gain.connect(this.masterGain);
       
       osc.start(now);
       osc.stop(now + 1.8);
@@ -258,7 +258,7 @@ class AudioEngine {
       modGain.connect(carrier.frequency); // FM modulation routing
       
       carrier.connect(gain);
-      gain.connect(this.analyser);
+      gain.connect(this.masterGain);
       
       modulator.start(now);
       carrier.start(now);
@@ -288,7 +288,7 @@ class AudioEngine {
       
       osc.connect(filter);
       filter.connect(gain);
-      gain.connect(this.analyser);
+      gain.connect(this.masterGain);
       
       osc.start(now);
       osc.stop(now + 0.7);
@@ -349,7 +349,7 @@ class AudioEngine {
       gain1.connect(filter);
       gain2.connect(filter);
       filter.connect(master);
-      master.connect(this.analyser);
+      master.connect(this.masterGain);
       
       osc1a.start(now);
       osc1b.start(now);
@@ -451,7 +451,7 @@ class AudioEngine {
       
       osc.connect(filter);
       filter.connect(gain);
-      gain.connect(this.analyser);
+      gain.connect(this.masterGain);
       
       osc.start(time);
       osc.stop(time + oscStopOffset);
@@ -503,7 +503,7 @@ class AudioEngine {
     this.whiteGain.connect(this.noiseGainNode);
     this.pinkGain.connect(this.noiseGainNode);
     
-    this.noiseGainNode.connect(this.analyser);
+    this.noiseGainNode.connect(this.masterGain);
     
     // Set initial balance
     this.updateNoiseFade(this.noiseCrossfade);
@@ -899,7 +899,7 @@ class AudioEngine {
     pinkSrc.connect(pinkGain);
     whiteGain.connect(envGainNode);
     pinkGain.connect(envGainNode);
-    envGainNode.connect(this.analyser);
+    envGainNode.connect(this.masterGain);
     
     // Start and auto-schedule stop
     whiteSrc.start(now);
@@ -982,7 +982,7 @@ class AudioEngine {
     
     osc.connect(filter);
     filter.connect(gain);
-    gain.connect(this.analyser);
+    gain.connect(this.masterGain);
     
     osc.start(now);
     osc.stop(now + holdTime + 0.3);
@@ -1480,7 +1480,7 @@ class AudioEngine {
     }
     
     // Routing final output
-    voice.gain.connect(this.analyser);
+    voice.gain.connect(this.masterGain);
     
     // Start active primary oscillator (if not started above)
     if (slideNum !== 4 && slideNum !== 11) {
