@@ -1429,7 +1429,7 @@ body {
 
 .pg-controls-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 12px;
   flex: 1;
   margin-bottom: 8px;
@@ -1550,6 +1550,38 @@ body {
   font-size: 0.7rem;
   padding: 6px 2px;
   border-radius: 4px;
+}
+.retro-switch-group {
+  display: flex;
+  background: #e2dfd5; /* Recessed slot */
+  border: 1px solid var(--panel-border);
+  border-radius: 20px;
+  padding: 2px;
+  gap: 0;
+}
+.retro-switch-group .btn-wave-select {
+  border: none;
+  background: transparent;
+  border-radius: 18px;
+  font-size: 0.6rem;
+  padding: 4px 6px;
+  font-weight: bold;
+  color: var(--text-muted);
+  flex: 1;
+  box-shadow: none;
+  transition: all 0.15s ease-in-out;
+  text-transform: uppercase;
+  height: auto;
+}
+.retro-switch-group .btn-wave-select.active {
+  background: #fdfdfb; /* Switch slider knob */
+  color: var(--primary);
+  box-shadow: 0 1px 4px rgba(40, 38, 33, 0.2);
+  border: 1px solid var(--panel-border);
+}
+.retro-switch-group .btn-wave-select:hover:not(.active) {
+  color: var(--text-color);
+  background: rgba(255, 255, 255, 0.3);
 }
 .interactive-dial {
   cursor: ns-resize;

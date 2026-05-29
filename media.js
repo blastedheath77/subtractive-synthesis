@@ -685,6 +685,7 @@ class AudioEngine {
 
   updatePgFilter(cutoff, resonance) {
     if (!this.isInitialized) return;
+    if (window.state && window.state.arpEnabled) return;
     const now = this.ctx.currentTime;
     this.activeVoices.forEach((voice) => {
       if (voice.slideNum === 12 && voice.filter) {
@@ -704,6 +705,7 @@ class AudioEngine {
 
   updatePgEnvDepth(envDepth) {
     if (!this.isInitialized) return;
+    if (window.state && window.state.arpEnabled) return;
     const now = this.ctx.currentTime;
     this.activeVoices.forEach((voice) => {
       if (voice.slideNum === 12 && voice.filter && !voice.released) {

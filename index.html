@@ -829,6 +829,46 @@
                       <button class="btn-wave-select" data-noisecolor="pink">Pink</button>
                     </div>
                   </div>
+
+                  <!-- Arpeggiator Section inside Col 1 -->
+                  <div class="pg-control-box" style="border-top: 1px dashed var(--paper-rule); margin-top: 8px; padding-top: 8px; display: flex; flex-direction: column; gap: 6px;">
+                    <label class="control-label" style="font-weight: bold; color: var(--primary); font-size: 0.7rem; margin-bottom: 2px;">ARPEGGIATOR</label>
+                    
+                    <!-- Row 1: Start and Clear Buttons -->
+                    <div style="display: flex; gap: 6px; width: 100%;">
+                      <button class="btn-wave-select" id="btn-pg-arp-toggle" style="flex: 1; font-weight: bold; font-size: 0.65rem; padding: 4px 2px;">START</button>
+                      <button class="btn-wave-select" id="btn-pg-arp-clear" style="flex: 1; font-size: 0.65rem; padding: 4px 2px;">CLEAR</button>
+                    </div>
+
+                    <!-- Row 2: 3-Stage Switch for Mode -->
+                    <div style="display: flex; flex-direction: column; gap: 2px; margin-top: 2px;">
+                      <span class="control-label" style="font-size: 0.55rem; color: var(--text-muted); text-align: center;">MODE</span>
+                      <div class="retro-switch-group" id="btn-group-pg-arp-mode">
+                        <button class="btn-wave-select active" data-arpmode="up">UP</button>
+                        <button class="btn-wave-select" data-arpmode="down">DOWN</button>
+                        <button class="btn-wave-select" data-arpmode="play">ORDER</button>
+                      </div>
+                    </div>
+
+                    <!-- Row 3: Tempo and Pattern Memory (Side-by-side) -->
+                    <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 2px; gap: 12px;">
+                      <!-- Tempo Dial (left) -->
+                      <div class="knob-control-wrapper" style="flex: 1; display: flex; flex-direction: column; align-items: center;">
+                        <div class="dial-container" style="width: 28px; height: 28px;">
+                          <div class="dial-body interactive-dial" id="dial-pg-arp-tempo" data-min="60" data-max="240" data-value="120" data-step="1" data-scale="linear" style="width: 28px; height: 28px;">
+                            <div class="dial-indicator" style="height: 6px; width: 2px;"></div>
+                          </div>
+                        </div>
+                        <span class="dial-readout" id="lbl-pg-arp-tempo" style="font-size: 0.55rem; margin-top: 2px;">120 BPM</span>
+                      </div>
+                      
+                      <!-- Pattern Memory Status (right) -->
+                      <div style="flex: 1.2; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
+                        <span class="control-label" style="font-size: 0.55rem; color: var(--text-muted);">PATTERN</span>
+                        <span id="lbl-pg-arp-count" style="font-family: var(--font-dashboard); font-size: 0.65rem; color: var(--primary); font-weight: bold; margin-top: 2px;">0 notes</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
                 <!-- Col 2: VCF Filter & VCA/VCF ADSR Envelopes -->
@@ -972,49 +1012,6 @@
                       <button class="btn-wave-select" data-lfodest="pitch">Pitch</button>
                       <button class="btn-wave-select" data-lfodest="filter">Filter</button>
                       <button class="btn-wave-select" data-lfodest="volume">Amp</button>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Col 4: Arpeggiator -->
-                <div class="pg-col">
-                  <div class="pg-panel-title">ARPEGGIATOR</div>
-                  
-                  <div class="pg-control-box">
-                    <label class="control-label">ARPEGGIATOR ON/OFF</label>
-                    <div class="waveform-btn-group btn-group-pg" id="btn-group-pg-arp-toggle-wrapper">
-                      <button class="btn-wave-select" id="btn-pg-arp-toggle" style="font-weight: bold;">START</button>
-                    </div>
-                  </div>
-
-                  <div class="pg-control-box">
-                    <label class="control-label">PLAY MODE</label>
-                    <div class="waveform-btn-group btn-group-pg" id="btn-group-pg-arp-mode">
-                      <button class="btn-wave-select active" data-arpmode="up">Up</button>
-                      <button class="btn-wave-select" data-arpmode="down">Down</button>
-                      <button class="btn-wave-select" data-arpmode="play">Order</button>
-                    </div>
-                  </div>
-
-                  <div class="pg-control-box">
-                    <label class="control-label">TEMPO (SPEED)</label>
-                    <div style="display: flex; justify-content: center; padding: 4px 0;">
-                      <div class="knob-control-wrapper">
-                        <div class="dial-container">
-                          <div class="dial-body interactive-dial" id="dial-pg-arp-tempo" data-min="60" data-max="240" data-value="120" data-step="1" data-scale="linear">
-                            <div class="dial-indicator"></div>
-                          </div>
-                        </div>
-                        <span class="dial-readout" id="lbl-pg-arp-tempo">120 BPM</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="pg-control-box">
-                    <label class="control-label">PATTERN MEMORY</label>
-                    <div style="display: flex; flex-direction: column; gap: 8px; align-items: center; padding: 4px 0;">
-                      <span id="lbl-pg-arp-count" style="font-family: var(--font-dashboard); font-size: 0.65rem; color: var(--primary);">0 notes stored</span>
-                      <button class="btn-wave-select" id="btn-pg-arp-clear" style="width: 100%; font-size: 0.75rem; padding: 6px 2px;">CLEAR</button>
                     </div>
                   </div>
                 </div>

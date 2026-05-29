@@ -49,6 +49,7 @@ const state = {
   arpTimer: null,
   arpStepIndex: 0
 };
+window.state = state;
 
 // Musical note frequencies mapping
 const NOTE_MAP = {
@@ -2366,10 +2367,6 @@ function initArpeggiatorControls() {
     const val = Math.round(parseFloat(tempoDial.dataset.value));
     tempoLbl.textContent = `${val} BPM`;
     state.arpTempo = val;
-    if (state.arpEnabled) {
-      // Re-trigger timer immediately with new tempo rate
-      startArpTimer();
-    }
   });
 
   // Clear button listener
@@ -2430,16 +2427,26 @@ function stopArpeggiator() {
 
 function startArpTimer() {
   if (state.arpTimer) {
-    clearInterval(state.arpTimer);
+    clearTimeout(state.arpTimer);
     state.arpTimer = null;
   }
+  state.arpTimerActive = true;
+  runArpeggiatorNextStep();
+}
+
+function runArpeggiatorNextStep() {
+  if (!state.arpEnabled || !state.arpTimerActive) return;
+  
+  tickArpeggiator();
+  
   const stepIntervalMs = (60 / state.arpTempo) * 0.5 * 1000; // 8th notes
-  state.arpTimer = setInterval(tickArpeggiator, stepIntervalMs);
+  state.arpTimer = setTimeout(runArpeggiatorNextStep, stepIntervalMs);
 }
 
 function stopArpTimer() {
+  state.arpTimerActive = false;
   if (state.arpTimer) {
-    clearInterval(state.arpTimer);
+    clearTimeout(state.arpTimer);
     state.arpTimer = null;
   }
 }
@@ -2448,7 +2455,7 @@ function updateArpPatternUI() {
   const countLbl = document.getElementById("lbl-pg-arp-count");
   if (countLbl) {
     const len = state.arpPattern.length;
-    countLbl.textContent = `${len} note${len === 1 ? "" : "s"} stored`;
+    countLbl.textContent = `${len} note${len === 1 ? "" : "s"}`;
   }
 }
 
