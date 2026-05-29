@@ -663,7 +663,7 @@ class AudioEngine {
         const vcaS = parseFloat(document.getElementById("slider-pg-vca-s").value);
         const vcfS = parseFloat(document.getElementById("slider-pg-vcf-s").value);
         const filterCutoff = parseFloat(document.getElementById("dial-pg-cutoff").dataset.value || 2000);
-        const vcfEnvDepth = parseFloat(document.getElementById("dial-pg-vcf-env-depth").dataset.value || 0.5);
+        const vcfEnvDepth = parseFloat(document.getElementById("dial-pg-vcf-env-depth").dataset.value || 0.0);
         
         voice.gain.gain.cancelScheduledValues(now);
         voice.gain.gain.setValueAtTime(voice.gain.gain.value, now);
@@ -689,7 +689,7 @@ class AudioEngine {
     this.activeVoices.forEach((voice) => {
       if (voice.slideNum === 12 && voice.filter) {
         const vcfS = parseFloat(document.getElementById("slider-pg-vcf-s").value);
-        const vcfEnvDepth = parseFloat(document.getElementById("dial-pg-vcf-env-depth").dataset.value || 0.5);
+        const vcfEnvDepth = parseFloat(document.getElementById("dial-pg-vcf-env-depth").dataset.value || 0.0);
         voice.filter.Q.cancelScheduledValues(now);
         voice.filter.Q.setValueAtTime(resonance, now);
         
@@ -1283,7 +1283,7 @@ class AudioEngine {
       
       const filterCutoff = parseFloat(document.getElementById("dial-pg-cutoff").dataset.value || 2000);
       const filterRes = parseFloat(document.getElementById("dial-pg-res").dataset.value || 1.0);
-      const vcfEnvDepth = parseFloat(document.getElementById("dial-pg-vcf-env-depth").dataset.value || 0.5);
+      const vcfEnvDepth = parseFloat(document.getElementById("dial-pg-vcf-env-depth").dataset.value || 0.0);
       
       const lfoWave = document.querySelector("#btn-group-pg-lfo-wave .btn-wave-select.active").dataset.lfowave;
       const lfoRate = parseFloat(document.getElementById("dial-pg-lfo-rate").dataset.value || 2.0);

@@ -2203,8 +2203,10 @@ function initSlide12() {
   const envDepthLbl = document.getElementById("lbl-pg-vcf-env-depth");
   envDepthDial.addEventListener("dialchange", () => {
     const val = parseFloat(envDepthDial.dataset.value);
-    const sign = val >= 0 ? "+" : "";
-    envDepthLbl.textContent = `${sign}${(val * 100).toFixed(0)}%`;
+    const roundedPercent = Math.round(val * 100);
+    const sign = roundedPercent > 0 ? "+" : "";
+    const displayVal = roundedPercent === 0 ? 0 : roundedPercent;
+    envDepthLbl.textContent = `${sign}${displayVal}%`;
     synth.updatePgEnvDepth(val);
   });
 
